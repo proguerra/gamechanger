@@ -52,14 +52,9 @@ export default class RunnerScene extends Phaser.Scene {
     });
     this.player.play('run');
 
-    // Group for obstacles
+    // Group for obstacles and start spawning
     this.obstacles = this.physics.add.group();
-    this.time.addEvent({
-      delay: 1500,
-      callback: this.spawnObstacle,
-      callbackScope: this,
-      loop: true
-    });
+    this.time.delayedCall(1000, this.spawnObstacle, [], this);
 
     // Collision detection
     this.physics.add.collider(this.player, this.groundGroup);
@@ -115,6 +110,10 @@ export default class RunnerScene extends Phaser.Scene {
     // Automatically remove once off screen
     cactus.checkWorldBounds = true;
     cactus.outOfBoundsKill = true;
+
+    // Schedule the next obstacle with a random delay
+    const delay = Phaser.Math.Between(800, 1600);
+    this.time.delayedCall(delay, this.spawnObstacle, [], this);
   }
 
   update(time, delta) {
