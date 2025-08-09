@@ -24,7 +24,13 @@ export default class GameOverScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
-    // Display the final score
+    // Display the final score and update high score
+    const bestScore = Math.max(
+      data.score,
+      Number(localStorage.getItem('bestScore')) || 0
+    );
+    localStorage.setItem('bestScore', bestScore);
+
     this.add
       .text(
         this.scale.width / 2,
@@ -33,6 +39,18 @@ export default class GameOverScene extends Phaser.Scene {
         {
           fontSize: '32px',
           fill: '#FFF'
+        }
+      )
+      .setOrigin(0.5);
+
+    this.add
+      .text(
+        this.scale.width / 2,
+        this.scale.height * 0.52,
+        `Best: ${bestScore}`,
+        {
+          fontSize: '28px',
+          fill: '#FFD700'
         }
       )
       .setOrigin(0.5);

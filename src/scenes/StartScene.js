@@ -27,6 +27,15 @@ export default class StartScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
+    // Display best score from previous runs if available
+    const bestScore = localStorage.getItem('bestScore') || 0;
+    this.add
+      .text(this.scale.width / 2, this.scale.height * 0.35, `Best: ${bestScore}`, {
+        fontSize: '24px',
+        fill: '#FFF'
+      })
+      .setOrigin(0.5);
+
     // Free Play button
     const free = this.add
       .image(this.scale.width / 2, this.scale.height * 0.5, 'freeBtn')
